@@ -1,30 +1,39 @@
 # Developing an Equitable V2G Pricing Strategy: Simulation Dataset
 
-This repository contains the comprehensive simulation dataset generated to develop, test, and evaluate an equitable Vehicle-to-Grid (V2G) pricing strategy. The primary objective of this research is to design financial incentive mechanisms that motivate Electric Vehicle (EV) owners to participate in V2G grid-balancing schemes while safeguarding technical integrity (battery health) and adapting to dynamic energy market conditions. 
+This repository contains a comprehensive simulation dataset designed to evaluate, test, and validate Vehicle-to-Grid (V2G) economic outcomes and pricing strategies. The core purpose of this dataset is to investigate how much profit an electric vehicle (EV) can generate for a company depending on its unique operational and technical characteristics. By analyzing this multi-parameter data, researchers can identify which variables exert the greatest influence on V2G profitability and use these insights to design equitable incentive mechanisms for EV owners.
 
-The dataset supports investigations into reliable, sustainable energy storage, and peak-load reduction within corporate charging infrastructures.
+The dataset acts as a benchmark to verify V2G optimization models and pricing strategies within corporate charging infrastructures.
 
 ---
 
-## Dataset Overview & Simulation Parameters
+## Methodology & Simulation Framework
 
-The dataset was generated through extensive multi-parameter simulations modeling an EV stationed at a corporate facility. The simulations integrate historical and simulated energy market conditions spanning a five-year horizon (**2021–2025**), capturing spot-market pricing, peak-demand charges, and battery degradation characteristics.
+The dataset was generated using a deterministic **Mixed-Integer Linear Programming (MILP)** mathematical model. 
+* **Core Framework:** The optimization model is based on an adapted version of the **Demand Response Analysis Framework (DRAF)** ([GitHub Repository](https://github.com/DrafProject/draf)), an open-source Python tool designed for environmental and economic analysis of Demand Response.
+* **Optimization Solver:** Every simulation scenario was solved to global optimality (MIP gap = 0) using the **Gurobi 13.0 Solver** via its Python interface.
+* **Empirical Foundation:** The simulations utilize **real-world corporate facility data** (including historical load profiles and peak pricing) combined with actual electricity market conditions (**Day-Ahead spot market prices**).
+* **Scale:** A total of **over 55,000 discrete simulations** were conducted, spanning a five-year horizon (**2021–2025**).
 
-### Parameter Space
+---
+
+## Dataset Overview & Parameter Space
+
+Each simulation run models the daily commuter cycle of a single EV over an entire calendar year. The simulation replicates a realistic corporate environment where the EV arrives at the company facility every day, remains plugged in during its designated availability window (enabling V2G charging, discharging, and smart grid optimization), and departs for the return home trip.
+
 * **Battery Capacity:** 10 kWh to 180 kWh (evaluated in 10 kWh increments).
 * **Arrival State of Charge (SOC):** Categorized into three operational windows:
   * `low`: 20% – 40%
   * `medium`: 40% – 60%
   * `high`: 60% – 80%
-* **Charging/Discharging Speed:** 7.2 kW, 11 kW, 22 kW, and 30 kW.
+* **Charging/Discharging rate:** Primary analysis focused on 7.2 kW, 11 kW, 22 kW, and 30 kW (additional charging/discharging ratings were included for example 100, 150, 200, 250 kW).
 * **Daily Availability Windows:** 2h, 4h, 6h, 8h, and 10h per day.
 * **Corporate Shift Slots (Availability Windows):**
   * `slot1` (06:00 – 14:00) | Simulation Index: 24 to 56
   * `slot2` (14:00 – 22:00) | Simulation Index: 56 to 88
   * `slot3` (22:00 – 06:00) | Simulation Index: 88 to 96 & 0 to 24 (Cross-day)
   * `slot4` (08:00 – 18:00) | Simulation Index: 32 to 72 (Standard office shift)
-* **Target Target (Free) Charging Increments:** 0%, 5%, 10%, 15%, 20%, 25%, and 30%.
-* **Economic Variables:** Multi-year electricity market spot pricing, peak pricing, and load curves.
+* **Target (Free) Charging Increments:** 0%, 5%, 10%, 15%, 20%, 25%, and 30%.
+* **Economic Variables:** Multi-year Day-Ahead market spot pricing, real corporate peak pricing, and empirical facility load curves (2021–2025).
 
 ---
 
@@ -35,7 +44,7 @@ The dataset was generated through extensive multi-parameter simulations modeling
 | **ID** | Integer | Unique vehicle/simulation run identifier. | `1` |
 | **Year** | Integer | Simulation calendar year (2021–2025). | `2022` |
 | **Capacity** | Float | Battery capacity of the EV in kWh. | `20.0` |
-| **Charging_Speed** | Float | Maximum power transfer rate of the vehicle charger in kW. | `7.2` |
+| **Charging_Speed** | Float | Maximum charging/discharging rate of the vehicle charger in kW. | `7.2` |
 | **Slot** | Integer | Shift slot index (1 to 4) mapping the vehicle's presence. | `1` |
 | **Time_Period** | Float | Total presence duration of the vehicle in hours. | `6.0` |
 | **SOC_Arrival** | String | Categorized state of charge scenario upon arrival (`low`, `medium`, `high`). | `medium` |
@@ -45,12 +54,12 @@ The dataset was generated through extensive multi-parameter simulations modeling
 | **Peak Costs** | Float | Calculated peak load costs for the facility (€). | `10,000.0` |
 | **Peak Reduction** | Float | Achieved reduction of the facility's peak load via V2G discharge (kW). | `35.0` |
 | **Battery Degradation Costs** | Float | Estimated financial equivalent of battery degradation per year (€). | `155.2` |
-| **Power In [kWh]** | Float | Total electrical energy charged into the EV battery. | `14,000.0` |
+| **Power In [kWh]** | Float | Total electrical energy charged into the EV battery over the year. | `14,000.0` |
 | **Power Out [kWh]** | Float | Total electrical energy discharged from the EV back to the grid/facility. | `13,200.0` |
 | **Charging Costs** | Float | Isolated electricity costs directly related to charging the EV (€). | `500.0` |
 | **Discharge Savings** | Float | Financial savings generated by shifting facility load to the EV battery (€). | `1,000.0` |
 | **Arbitrage Value** | Float | Net financial gains from energy shifting (Discharge Savings - Charging Costs) (€). | `500.0` |
-| **Reference_Cost** | Float | Baseline energy costs for the facility without V2G integration (€). | `300,000.0` |
+| **Reference_Cost** | Float | Baseline energy costs for the facility without V2G integration (€). | `200,000.0` |
 | **Net_Compensation** | Float | Calculated equitable incentive/payout to the EV participant (€). | `314.67` |
 | **profit_company** | Float | Net economic profit remaining for the corporate facility (€). | `1294.63` |
 
@@ -65,4 +74,4 @@ This dataset is made available under the **Creative Commons Attribution 4.0 Inte
 If you utilize this dataset, the simulation parameters, or the underlying V2G pricing methodology in an academic publication or project, please use the following citation format:
 
 ```text
-[Author Name]. (2026). Developing an Equitable V2G Pricing Strategy: Simulation Dataset (Version v1.0.0). Zenodo. [https://doi.org/10.5281/zenodo.XXXXX](https://doi.org/10.5281/zenodo.XXXXX)
+[Author Name]. (2026). Developing an Equitable V2G Pricing Strategy: Simulation Dataset (Version v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.XXXXX
