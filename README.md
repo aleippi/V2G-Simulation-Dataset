@@ -12,7 +12,7 @@ The dataset was generated using a deterministic **Mixed-Integer Linear Programmi
 * **Core Framework:** The optimization model is based on an adapted version of the **Demand Response Analysis Framework (DRAF)** ([GitHub Repository](https://github.com/DrafProject/draf)), an open-source Python tool designed for environmental and economic analysis of Demand Response.
 * **Optimization Solver:** Every simulation scenario was solved to global optimality (MIP gap = 0) using the **Gurobi 13.0 Solver** via its Python interface.
 * **Pricing Strategy & Empirical Foundation:** The simulations utilize **real-world corporate facility data** (including historical load profiles and peak pricing) combined with a Real-Time Pricing (RTP) strategy. The electricity market component is based on the official historical hourly prices of the **Germany − GER/LU (bidding zone)** Day-Ahead spot market.
-* **Scale:** A total of **over 58,000 discrete simulations** were conducted, spanning a five-year horizon (**2021–2025**).
+* **Scale:** A total of **over 61,000 discrete simulations** were conducted, spanning a five-year horizon (**2021–2025**).
 
 ---
 
