@@ -64,7 +64,6 @@ The columns within the dataset (`.xlsx` / `.csv`) are formatted with word-capita
 | **Reference_Cost** | Float | Baseline energy costs for the corporate facility without any V2G integration (€). | `200,000.0` |
 | **Net_Compensation** | Float | Total financial difference between baseline and V2G operational costs (Reference_Cost - Total_Costs) (€). | `314.67` |
 | **Profit_Company** | Float | Net economic profit remaining for the corporate facility, calculated as: Net_Compensation + Battery_Degradation_Costs (€). | `1,294.63` |
-| **SOC_Num** | Float | The numerical representation of the arrival state of charge profile (0.3 for low, 0.5 for medium, 0.7 for high). | `0.5` |
 
 ---
 
