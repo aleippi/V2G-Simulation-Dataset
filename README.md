@@ -12,7 +12,7 @@ The dataset was generated using a deterministic **Mixed-Integer Linear Programmi
 * **Core Framework:** The optimization model is based on an adapted version of the **Demand Response Analysis Framework (DRAF)** ([GitHub Repository](https://github.com/DrafProject/draf)), an open-source Python tool designed for environmental and economic analysis of Demand Response.
 * **Optimization Solver:** Every simulation scenario was solved to global optimality (MIP gap = 0) using the **Gurobi 13.0 Solver** via its Python interface.
 * **Pricing Strategy & Empirical Foundation:** The simulations utilize **real-world corporate facility data** (including historical load profiles and peak pricing) combined with a Real-Time Pricing (RTP) strategy. The electricity market component is based on the official historical hourly prices of the **Germany − GER/LU (bidding zone)** Day-Ahead spot market.
-* **Scale:** A total of **over 61,000 discrete simulations** were conducted, spanning a five-year horizon (**2021–2025**).
+* **Scale:** A total of **over 55,000 discrete simulations** were conducted, spanning a five-year horizon (**2021–2025**).
 
 ---
 
@@ -22,9 +22,9 @@ Each simulation run models the daily commuter cycle of a single EV over an entir
 
 * **Battery Capacity:** 10 kWh to 180 kWh (evaluated in 10 kWh increments).
 * **Arrival State of Charge (SOC):** Categorized into three operational windows:
-  * `low`: 20% – 40% (represented numerically as `0.3`)
-  * `medium`: 40% – 60% (represented numerically as `0.5`)
-  * `high`: 60% – 80% (represented numerically as `0.7`)
+  * `low`: 20% – 40%
+  * `medium`: 40% – 60%
+  * `high`: 60% – 80%
 * **Charging/Discharging Rate:** Primary analysis focused on 7.2 kW, 11 kW, 22 kW, and 30 kW (additional charging/discharging ratings were included for exploratory testing, e.g., 100 kW, 150 kW, 200 kW, and 250 kW).
 * **Daily Availability Windows:** 2h, 4h, 6h, 8h, and 10h per day.
 * **Corporate Shift Slots (Availability Windows):**
